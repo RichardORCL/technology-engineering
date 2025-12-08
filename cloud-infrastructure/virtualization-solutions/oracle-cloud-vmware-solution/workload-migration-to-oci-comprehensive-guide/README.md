@@ -2,13 +2,13 @@
 
 This guide provides a detailed technical overview of migration methodologies and tooling — including VMware HCX, RackWare, and Oracle Cloud Migrations (OCM) — used to transition workloads from both VMware and non-VMware environments to Oracle Cloud Infrastructure (OCI). It outlines key requirements, tool capabilities, architectural approaches, and decision frameworks to support large-scale enterprise migrations with minimal disruption.
 
-Reviewed: 12.11.2025
+Reviewed: 08.12.2025
 
 ## On-premises migration scenarios overview
 
 Select the appropriate migration guide based on your source environment and target platform:
 
-| Source Environment | Target Platform | Primary Tool | Migration Guide |
+| Source Environment | Target Platform | Migration Tooling | Migration Guide |
 |-------------------|-----------------|--------------|-----------------|
 | VMware vSphere | Oracle Cloud VMware Solution (OCVS) | VMware HCX | [VMware vSphere to OCVS using HCX](./files/vmware-vsphere-to-ocvs-hcx.md) |
 | VMware vSphere | OCI Native Compute Instances | Oracle Cloud Migrations (OCM) / RackWare | [VMware vSphere to OCI Native](./files/vmware-vsphere-to-oci-native.md) |
@@ -17,7 +17,7 @@ Select the appropriate migration guide based on your source environment and targ
 | Physical x86 Servers | OCI Native Compute Instances / OCVS | RackWare | [Physical x86 to OCI](./files/physical-to-oci.md) |
 
 ## Cloud migration scenarios overview
-| Source Environment       | Target Platform           | Primary Tool                   | Migration Guide                              |
+| Source Environment       | Target Platform           | Migration Tooling                   | Migration Guide                              |
 |-------------------------|---------------------------|-------------------------------|----------------------------------------------|
 | AWS EC2 / VMs           | OCI Native Compute Instances | Oracle Cloud Migrations (OCM) / RackWare | [AWS to OCI Native](./files/aws-to-oci-native.md)           |
 | Other Public Clouds (Azure, GCP, etc.) | OCI Native Compute Instances | RackWare | [Other Clouds to OCI Native](./files/other-clouds-to-oci-native.md) |
