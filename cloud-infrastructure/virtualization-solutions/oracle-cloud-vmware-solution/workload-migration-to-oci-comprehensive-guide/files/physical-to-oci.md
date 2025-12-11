@@ -17,7 +17,7 @@ Enterprises can choose between two primary target platforms in OCI:
 ### OCI Native Compute Instances
 
 **Key Characteristics:**
-- **Hypervisor:** OCI KVM
+- **Hypervisor:** OCI Compute Service
 - **Management Tools:** OCI Console
 - **Best Use Case:** Cloud-native apps, replatformed VMs, containers
 - **Compute Shapes:** Flexibly defined OCPU/RAM; Standard, DenseIO, GPU, HPC, Ampere
@@ -135,9 +135,10 @@ While VM-level migration tools like RackWare can handle the majority of workload
 - Continuous write activity (transaction-heavy workloads).
 - The requirement for zero or near-zero downtime.
 
-To migrate such mission critical workloads and DB's you might consider dedicated solutions and architectures:
+TTo migrate such mission critical workloads and DB's you might consider dedicated solutions and architectures:
+
 - **Oracle Databases** – Use Oracle Data Guard or GoldenGate for robust replication, synchronization, and failover capabilities.
-- **Microsoft SQL Server** – Implement Always On Availability Groups to ensure transactional consistency and minimize downtime.
+- **PostgreSQL/MySQL** – Use native replication or database-specific migration tools.
 - **Microsoft Active Directory** – Use native AD replication between domain controllers to maintain consistency.
 - **Microsoft Exchange Server** – Leverage Exchange Hybrid configurations or Database Availability Groups (DAGs) for continuity during migration.
 
@@ -145,27 +146,10 @@ By combining VM-level mobility with application-aware replication, enterprises c
 
 ## Best Practices & Guidance
 
-To ensure a smooth and resilient transition to Oracle Cloud Infrastructure (OCI), the following best practices should be incorporated into any migration strategy:
+To ensure a smooth and resilient transition to OCI Native Compute Instances, the following best practices should be incorporated into any migration strategy:
 
 - **Adopt a phased migration approach** – Start with lower-priority or non-production workloads to validate tooling, processes, and network designs. Use early phases as learning cycles before addressing mission-critical systems.
 
-- **Plan for IP remapping (OCI Native)** or **Leverage Layer 2 network extension (OCVS)** – For OCI Native migrations, document all IP addresses, DNS records, and firewall rules that will need updating. For OCVS migrations, deploy VMware HCX L2 extensions with sufficient bandwidth and redundancy.
+- **Plan for IP remapping** – Document all IP addresses, DNS records, and firewall rules that will need updating. Create a comprehensive IP mapping table and security group mapping before migration begins.
 
-- **Validate bandwidth and connectivity** – Confirm that FastConnect or VPN capacity can handle large-scale data transfers without impacting production traffic. Monitor latency, throughput, and error rates throughout the migration.
-
-- **Establish rollback procedures** – Define clear fallback and recovery scenarios in case of migration failure. Document rollback steps and ensure that teams are trained to execute them under time pressure.
-
-- **Implement robust testing** – Conduct end-to-end validation of application behavior, security controls, and performance benchmarks in the target environment before go-live. Include functional, load, and failover testing.
-
-- **Engage stakeholders early** – Involve application owners, database administrators, network and security teams during the planning stage. Align technical decisions with business objectives, compliance requirements, and service-level agreements (SLAs).
-
-- **Maintain comprehensive documentation** – Capture migration plans, cutover runbooks, rollback steps, and lessons learned to ensure repeatability and knowledge transfer across teams.
-
-- **Use automation where possible** – Leverage orchestration and migration tooling (e.g., RackWare workflows) to reduce manual effort and minimize human error.
-
-- **Plan for post-migration optimization** – After workloads are stable in OCI, review performance, right-size compute shapes, and integrate with OCI's managed services (e.g., monitoring, security, backup) to maximize efficiency and cost savings.
-
-- **Prioritize security and compliance** – Ensure IAM policies, network security lists, encryption settings, and audit configurations are validated before workloads are exposed to production use.
-
-- **Leverage cloud-native capabilities** – Take advantage of OCI's managed services such as Autonomous Database, Object Storage, and monitoring services to modernize applications post-migration.
-
+- **Leverage OCI-native services** – Take advantage of OCI's managed services such as Autonomous Database, Object Storage, and monitoring services to modernize applications post-migration.

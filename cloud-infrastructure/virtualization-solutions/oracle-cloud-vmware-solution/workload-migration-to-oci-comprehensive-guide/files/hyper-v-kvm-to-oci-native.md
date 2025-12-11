@@ -11,7 +11,7 @@ Oracle Cloud Infrastructure (OCI) is a global cloud services platform offering a
 ## Target Platform: OCI Native Compute Instances
 
 **Key Characteristics:**
-- **Hypervisor:** OCI KVM
+- **Hypervisor:** OCI Compute Service
 - **Management Tools:** OCI Console
 - **Best Use Case:** Cloud-native apps, replatformed VMs, containers
 - **Compute Shapes:** Flexibly defined OCPU/RAM; Standard, DenseIO, GPU, HPC, Ampere
@@ -21,7 +21,7 @@ Oracle Cloud Infrastructure (OCI) is a global cloud services platform offering a
 
 ## Migration Tools
 
-### RackWare (Recommended)
+### RackWare 
 
 RackWare is a cloud-agnostic workload mobility and resilience platform that simplifies migration, disaster recovery, and backup across physical, virtual, and cloud-native environments. Its core product, the RackWare Management Module (RMM), provides agentless, policy driven automation to move and protect workloads.
 
@@ -46,20 +46,6 @@ RMM is available in OCI Marketplace with built-in support for OCI Native migrati
 - Organizations requiring migration, DR, and backup in a single platform
 - Complex migrations requiring policy-driven automation and dependency mapping
 
-### VMware HCX Enterprise with OSAM (Alternative)
-
-**OS-Assisted Migration (OSAM)** enables the migration of workloads from non-vSphere hypervisors, such as Microsoft Hyper-V or KVM, into OCI. Unlike standard vMotion or Bulk Migration, OSAM performs a guest-level migration by installing an HCX migration agent within the operating system. The agent copies the VM's disk and configuration data to the target environment, where the VM is then reconstructed.
-
-**Note:** While OSAM is primarily designed for migration to Oracle Cloud VMware Solution (OCVS), it can be used as part of a multi-step migration process. For direct migration to OCI Native, RackWare is typically the preferred solution.
-
-**Key Considerations:**
-- OSAM requires an HCX Enterprise license
-- Replication begins a full synchronization transfer to the destination site. The guest virtual machine remains online during replication until the final delta synchronization.
-- After the full sync, the switch over can be immediate or at a specific schedule just like Bulk Migration
-- Final delta sync starts when the switch phase starts, until then it maintains a continuous sync of changes
-- HCX performs a hardware mapping of the replicated volumes to ensure proper operation, including updates of the software stack on the replica. This fix-up process includes adding drivers and modifying the OS configuration files at the destination. The migrated virtual machine reboots during this process.
-- VMware Tools is installed on the migrated virtual machine and migration completes.
-- OSAM does not support P2V
 
 ## Assessment and Discovery Mapping
 
@@ -72,12 +58,6 @@ A structured assessment, planning, and testing phase is essential for validating
 - **Testing & Validation** – Conduct pilot migrations for representative workloads before executing large-scale cutovers. Validate performance, failover, and recovery procedures.
 
 ## Migration Considerations
-
-### Format Conversion
-
-**Hyper-V:** VHD/VHDX disk formats must be converted to OCI-compatible formats during migration. RackWare handles this conversion automatically.
-
-**KVM:** QCOW2, RAW, or other KVM disk formats must be converted to OCI-compatible formats. RackWare supports these conversions.
 
 ### Networking Changes
 
@@ -100,19 +80,6 @@ Migrating to OCI Native requires:
 - OCI-specific agents may need to be installed
 - Some hypervisor-specific configurations may need adjustment
 
-### Hyper-V Specific Considerations
-
-- **Generation 1 vs Generation 2 VMs:** Both are supported, but Generation 2 VMs (UEFI) may have better compatibility
-- **Dynamic Memory:** Convert to fixed memory allocation before migration
-- **Checkpoints:** Snapshots/checkpoints are not migrated
-- **SCSI vs IDE:** Ensure proper disk controller configuration
-
-### KVM Specific Considerations
-
-- **QCOW2 Snapshots:** Not migrated; consolidate before migration
-- **Virtio Drivers:** May need adjustment for OCI-compatible drivers
-- **CPU Models:** CPU features may need adjustment for OCI compatibility
-
 ## Special Considerations for Enterprise and Mission Critical Databases
 
 While VM-level migration tools (e.g., RackWare) can handle the majority of workloads, they may not be sufficient for enterprise-scale, mission-critical applications where downtime is unacceptable. For large and transaction-heavy databases, a pure VM-level migration introduces significant challenges due to:
@@ -121,8 +88,9 @@ While VM-level migration tools (e.g., RackWare) can handle the majority of workl
 - The requirement for zero or near-zero downtime.
 
 To migrate such mission critical workloads and DB's you might consider dedicated solutions and architectures:
+
 - **Oracle Databases** – Use Oracle Data Guard or GoldenGate for robust replication, synchronization, and failover capabilities.
-- **Microsoft SQL Server** – Implement Always On Availability Groups to ensure transactional consistency and minimize downtime.
+- **PostgreSQL/MySQL** – Use native replication or database-specific migration tools.
 - **Microsoft Active Directory** – Use native AD replication between domain controllers to maintain consistency.
 - **Microsoft Exchange Server** – Leverage Exchange Hybrid configurations or Database Availability Groups (DAGs) for continuity during migration.
 
@@ -134,23 +102,6 @@ To ensure a smooth and resilient transition to OCI Native Compute Instances, the
 
 - **Adopt a phased migration approach** – Start with lower-priority or non-production workloads to validate tooling, processes, and network designs. Use early phases as learning cycles before addressing mission-critical systems.
 
-- **Plan for IP remapping** – Document all IP addresses, DNS records, and firewall rules that will need updating. Create a comprehensive IP mapping table before migration begins.
-
-- **Validate bandwidth and connectivity** – Confirm that FastConnect or VPN capacity can handle large-scale data transfers without impacting production traffic. Monitor latency, throughput, and error rates throughout the migration.
-
-- **Establish rollback procedures** – Define clear fallback and recovery scenarios in case of migration failure. Document rollback steps and ensure that teams are trained to execute them under time pressure.
-
-- **Implement robust testing** – Conduct end-to-end validation of application behavior, security controls, and performance benchmarks in the target environment before go-live. Include functional, load, and failover testing.
-
-- **Engage stakeholders early** – Involve application owners, database administrators, network and security teams during the planning stage. Align technical decisions with business objectives, compliance requirements, and service-level agreements (SLAs).
-
-- **Maintain comprehensive documentation** – Capture migration plans, cutover runbooks, rollback steps, and lessons learned to ensure repeatability and knowledge transfer across teams.
-
-- **Use automation where possible** – Leverage orchestration and migration tooling (e.g., RackWare workflows) to reduce manual effort and minimize human error.
-
-- **Plan for post-migration optimization** – After workloads are stable in OCI, review performance, right-size compute shapes, and integrate with OCI's managed services (e.g., monitoring, security, backup, databases) to maximize efficiency and cost savings.
-
-- **Prioritize security and compliance** – Ensure IAM policies, network security lists, encryption settings, and audit configurations are validated before workloads are exposed to production use.
+- **Plan for IP remapping** – Document all IP addresses, DNS records, and firewall rules that will need updating. Create a comprehensive IP mapping table and security group mapping before migration begins.
 
 - **Leverage OCI-native services** – Take advantage of OCI's managed services such as Autonomous Database, Object Storage, and monitoring services to modernize applications post-migration.
-

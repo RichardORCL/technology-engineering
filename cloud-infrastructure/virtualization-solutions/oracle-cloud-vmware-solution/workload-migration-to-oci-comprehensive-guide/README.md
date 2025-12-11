@@ -12,7 +12,7 @@ Select the appropriate migration guide based on your source environment and targ
 |-------------------|-----------------|--------------|-----------------|
 | VMware vSphere | Oracle Cloud VMware Solution (OCVS) | VMware HCX | [VMware vSphere to OCVS using HCX](./files/vmware-vsphere-to-ocvs-hcx.md) |
 | VMware vSphere | OCI Native Compute Instances | Oracle Cloud Migrations (OCM) / RackWare | [VMware vSphere to OCI Native](./files/vmware-vsphere-to-oci-native.md) |
-| Microsoft Hyper-V / KVM | OCI Native Compute Instances | RackWare / HCX Enterprise (OSAM) | [Hyper-V/KVM to OCI Native](./files/hyper-v-kvm-to-oci-native.md) |
+| Microsoft Hyper-V / KVM | OCI Native Compute Instances | RackWare  | [Hyper-V/KVM to OCI Native](./files/hyper-v-kvm-to-oci-native.md) |
 | Microsoft Hyper-V / KVM | Oracle Cloud VMware Solution (OCVS) | HCX Enterprise (OSAM) / RackWare | [Hyper-V/KVM to OCVS](./files/hyper-v-kvm-to-ocvs.md) |
 | Physical x86 Servers | OCI Native Compute Instances / OCVS | RackWare | [Physical x86 to OCI](./files/physical-to-oci.md) |
 

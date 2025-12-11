@@ -102,19 +102,6 @@ A structured assessment, planning, and testing phase is essential for validating
 - VMware Tools will be installed during migration (for OSAM)
 - Some hypervisor-specific configurations may need adjustment
 
-### Hyper-V Specific Considerations
-
-- **Generation 1 vs Generation 2 VMs:** Both are supported, but Generation 2 VMs (UEFI) may have better compatibility with vSphere
-- **Dynamic Memory:** Convert to fixed memory allocation before migration
-- **Checkpoints:** Snapshots/checkpoints are not migrated
-- **SCSI vs IDE:** Ensure proper disk controller configuration for vSphere compatibility
-
-### KVM Specific Considerations
-
-- **QCOW2 Snapshots:** Not migrated; consolidate before migration
-- **Virtio Drivers:** Will be replaced with VMware paravirtual drivers
-- **CPU Models:** CPU features will be adjusted for vSphere compatibility
-
 ## Special Considerations for Enterprise and Mission Critical Databases
 
 While VM-level migration tools (e.g., HCX OSAM, RackWare) can handle the majority of workloads, they may not be sufficient for enterprise-scale, mission-critical applications where downtime is unacceptable. For large and transaction-heavy databases, a pure VM-level migration introduces significant challenges due to:
@@ -123,8 +110,9 @@ While VM-level migration tools (e.g., HCX OSAM, RackWare) can handle the majorit
 - The requirement for zero or near-zero downtime.
 
 To migrate such mission critical workloads and DB's you might consider dedicated solutions and architectures:
+
 - **Oracle Databases** – Use Oracle Data Guard or GoldenGate for robust replication, synchronization, and failover capabilities.
-- **Microsoft SQL Server** – Implement Always On Availability Groups to ensure transactional consistency and minimize downtime.
+- **PostgreSQL/MySQL** – Use native replication or database-specific migration tools.
 - **Microsoft Active Directory** – Use native AD replication between domain controllers to maintain consistency.
 - **Microsoft Exchange Server** – Leverage Exchange Hybrid configurations or Database Availability Groups (DAGs) for continuity during migration.
 
@@ -132,27 +120,10 @@ By combining VM-level mobility with application-aware replication, enterprises c
 
 ## Best Practices & Guidance
 
-To ensure a smooth and resilient transition to Oracle Cloud VMware Solution (OCVS), the following best practices should be incorporated into any migration strategy:
+To ensure a smooth and resilient transition to OCI Native Compute Instances, the following best practices should be incorporated into any migration strategy:
 
 - **Adopt a phased migration approach** – Start with lower-priority or non-production workloads to validate tooling, processes, and network designs. Use early phases as learning cycles before addressing mission-critical systems.
 
-- **Leverage Layer 2 network extension** – For workloads requiring strict IP preservation, deploy VMware HCX L2 extensions with sufficient bandwidth and redundancy. This reduces reconfiguration effort and ensures application continuity.
+- **Plan for IP remapping** – Document all IP addresses, DNS records, and firewall rules that will need updating. Create a comprehensive IP mapping table and security group mapping before migration begins.
 
-- **Validate bandwidth and connectivity** – Confirm that FastConnect or VPN capacity can handle large-scale data transfers without impacting production traffic. Monitor latency, throughput, and error rates throughout the migration.
-
-- **Establish rollback procedures** – Define clear fallback and recovery scenarios in case of migration failure. Document rollback steps and ensure that teams are trained to execute them under time pressure.
-
-- **Implement robust testing** – Conduct end-to-end validation of application behavior, security controls, and performance benchmarks in the target environment before go-live. Include functional, load, and failover testing.
-
-- **Engage stakeholders early** – Involve application owners, database administrators, network and security teams during the planning stage. Align technical decisions with business objectives, compliance requirements, and service-level agreements (SLAs).
-
-- **Maintain comprehensive documentation** – Capture migration plans, cutover runbooks, rollback steps, and lessons learned to ensure repeatability and knowledge transfer across teams.
-
-- **Use automation where possible** – Leverage orchestration and migration tooling (e.g., HCX policies, RackWare workflows) to reduce manual effort and minimize human error.
-
-- **Plan for post-migration optimization** – After workloads are stable in OCVS, review performance, right-size compute shapes, and integrate with OCI's managed services (e.g., monitoring, security, backup) to maximize efficiency and cost savings.
-
-- **Prioritize security and compliance** – Ensure IAM policies, network security lists, encryption settings, and audit configurations are validated before workloads are exposed to production use.
-
-- **Standardize on VMware** – Use this migration as an opportunity to standardize on VMware infrastructure, reducing operational complexity and tool sprawl.
-
+- **Leverage OCI-native services** – Take advantage of OCI's managed services such as Autonomous Database, Object Storage, and monitoring services to modernize applications post-migration.
