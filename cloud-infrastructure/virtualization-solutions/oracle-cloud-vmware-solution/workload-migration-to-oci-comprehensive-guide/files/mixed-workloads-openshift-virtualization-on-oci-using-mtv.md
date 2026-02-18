@@ -32,18 +32,18 @@ OpenShift Virtualization enables virtual machines to run as first-class Kubernet
 
 **Key Characteristics:**
 - **Container Platform:** Red Hat OpenShift Container Platform with OpenShift Virtualization
-- **Virtualization Technology:** KubeVirt
+- **Virtualization Technology:** KubeVirt, also leveraging QEMU for emulation and KVM for virtualization
 - **Licensing Model:** Bring Your Own Subscription (BYOS)
-- **Control Plane:** Customer-managed OpenShift control plane
-- **Worker Nodes:** OCI Compute (VM, Bare Metal or GPU)
-- **Networking:** OCI VCN-native networking
+- **Control Plane:** Customer-managed OpenShift control plane, based on OCI Compute (typically VM shapes)
+- **Worker Nodes:** OCI Compute (VM, Bare Metal or GPU shapes)
+- **Networking:** OCI VCN-native networking (with VCNs, Subnets, Flexible Load Balancers, DHCP and Native DNS integration)
 - **Ingress:** OpenShift Router
-- **Storage:** OCI Block Volume & File Storage via CSI
+- **Storage:** OCI Block Volume & File Storage via CSI (with ODF as a complimentary option, if needed)
 - **Best Use Case:** Enterprises standardizing on OpenShift for both VMs and containers
 
 # Migration Tooling: OpenShift Migration Toolkit for Virtualization (MTV)
 
-Migration Toolkit for Virtualization (MTV) is Red Hat’s supported tool for migrating VMs into OpenShift Virtualization. MTV supports:
+Migration Toolkit for Virtualization ([MTV](https://docs.redhat.com/en/documentation/migration_toolkit_for_virtualization)) is Red Hat’s supported tool for migrating VMs into OpenShift Virtualization. MTV supports:
 - VMware vSphere as a source
 - Disk-based VM migration
 - Network and storage mapping
@@ -51,6 +51,7 @@ Migration Toolkit for Virtualization (MTV) is Red Hat’s supported tool for mig
 
 MTV supports migration of virtual machines from multiple virtualization platforms into OpenShift Virtualization (KubeVirt), including:
 - VMware vSphere
+- OVA files repository (useful if it is not possible to create direct network connection with the vSphere source environment)
 - Red Hat Virtualization (RHV or oVirt)
 - Red Hat OpenStack Platform
 - Other KVM-based environments
@@ -114,14 +115,14 @@ This approach applies when containerized workloads originate from:
 
 This is the preferred path when the source platform is not already OpenShift.
 
-**3b. Container Redeployment (Non-OpenShift Source)**
+**3b. Container Redeployment (OpenShift Source)**
 This approach applies when:
 - Containerized workloads are already consolidated on OpenShift
 - The objective is to relocate the OpenShift platform to OCI
 - Preservation of application structure and configuration is required
 
 **Approach:**
-- Use Migration Toolkit for Containers (MTC) to migrate:
+- Use Migration Toolkit for Containers ([MTC](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/migration_toolkit_for_containers/index)) to migrate:
   - Namespaces
   - Kubernetes and OpenShift resources
   - Persistent volumes (where supported)

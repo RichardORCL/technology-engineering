@@ -26,11 +26,11 @@ OpenShift on OCI operates under a Bring Your Own Subscription (BYOS) model. Cust
 **Key Characteristics:**
 - **Container Platform:** Red Hat OpenShift Container Platform
 - **Licensing Model:** Bring Your Own Subscription (BYOS)
-- **Control Plane:** Customer-managed OpenShift control plane
-- **Worker Nodes:** OCI Compute (VM, Bare Metal or GPU)
-- **Networking:** OCI VCN-native networking
+- **Control Plane:** Customer-managed OpenShift control plane, based on OCI Compute (typically VM shapes)
+- **Worker Nodes:** OCI Compute (VM, Bare Metal or GPU shapes)
+- **Networking:** OCI VCN-native networking (with VCNs, Subnets, Flexible Load Balancers, DHCP and Native DNS integration)
 - **Ingress:** OpenShift Router (HAProxy-based)
-- **Storage:** OCI Block Volume & File Storage via CSI
+- **Storage:** OCI Block Volume & File Storage via CSI (with ODF as a complimentary option, if needed)
 - **Best Use Case:** Enterprises standardizing on OpenShift across hybrid and multi-cloud environments
 
 # Migration Strategy Positioning
@@ -61,7 +61,7 @@ Just like OKE, OpenShift migrations should avoid cluster-level state transfer. T
 **Container Images**
 - Existing images can be reused with minimal changes
 - Ensure:
-  - Image registries are accessible from OCI
+  - Image registries are accessible from OCI. Or evaluate if OCI Object Storage can be configured as the storage backend for the OpenShift Image Registries
   - OpenShift Security Context Constraints (SCCs) are respected
 - Preferred approach would be to mirror images into OCI Container Registry (OCIR)
 

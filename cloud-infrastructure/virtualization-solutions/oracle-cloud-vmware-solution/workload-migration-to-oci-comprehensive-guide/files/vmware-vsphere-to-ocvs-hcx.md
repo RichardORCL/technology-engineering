@@ -96,7 +96,7 @@ With RAV, multiple VMs are replicated simultaneously. When the replication phase
 
 <p align="center">
 
-![Deciding on the correct HCX migration type](./images/153850.png)
+![Deciding on the correct HCX migration type](./images/HCX-decision-tree.jpg)
 
 </p>
 

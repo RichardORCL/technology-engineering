@@ -31,16 +31,16 @@ OpenShift on OCI operates under a Bring Your Own Subscription (BYOS) model. Cust
 **Key Characteristics:**
 - **Container Platform:** Red Hat OpenShift Container Platform
 - **Licensing Model:** Bring Your Own Subscription (BYOS)
-- **Control Plane:** Customer-managed OpenShift control plane
-- **Worker Nodes:** OCI Compute (VM, Bare Metal or GPU)
-- **Networking:** OCI VCN-native networking
+- **Control Plane:** Customer-managed OpenShift control plane, based on OCI Compute (typically VM shapes)
+- **Worker Nodes:** OCI Compute (VM, Bare Metal or GPU shapes)
+- **Networking:** OCI VCN-native networking (with VCNs, Subnets, Flexible Load Balancers, DHCP and Native DNS integration)
 - **Ingress:** OpenShift Router
-- **Storage:** OCI Block Volume & File Storage via CSI
+- **Storage:** OCI Block Volume & File Storage via CSI (with ODF as a complimentary option, if needed)
 - **Best Use Case:** Enterprises with established OpenShift estates migrating to OCI
 
 # Migration Tooling: OpenShift Migration Toolkit for Containers (MTC)
 
-Migration Toolkit for Containers (MTC) is Red Hat’s supported solution for migrating workloads between OpenShift clusters. MTC enables:
+Migration Toolkit for Containers ([MTC](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/migration_toolkit_for_containers/index)) is Red Hat’s supported solution for migrating workloads between OpenShift clusters. MTC enables:
 - Namespace-level migration
 - Persistent volume data transfer
 - Application configuration migration
@@ -88,7 +88,7 @@ The target cluster pulls workloads from the source, ensuring control remains on 
   - Networking and ingress
   - Storage classes
   - Registry access
-- Install MTC Operator on target cluster
+- Install MTC Operator on both source and target cluster and define one of them as the "control cluster" (typically the target one)
 
 3. **Source Cluster Registration**
 - Register source OpenShift cluster with MTC

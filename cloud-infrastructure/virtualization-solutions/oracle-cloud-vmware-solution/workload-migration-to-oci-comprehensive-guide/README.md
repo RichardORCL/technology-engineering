@@ -91,7 +91,7 @@ For Other Public Clouds (Azure, GCP, etc.): The recommended tool for moving thes
 
 - Mixed VM-based + Containerized Workloads → OpenShift Virtualization on OCI: A platform consolidation strategy unifying VMs and containers under OpenShift. Containers are redeployed (or migrated via MTC if already OpenShift), while VMs are migrated using Migration Toolkit for Virtualization (MTV), enabling operational convergence.
 
-| Source Environment                          | Target Platform                          | Migration Tooling                                 | Migration Guid                                            |
+| Source Environment                          | Target Platform                          | Migration Tooling                                 | Migration Guide                                           |
 |---------------------------------------------|------------------------------------------|---------------------------------------------------|-----------------------------------------------------------|
 | Kubernetes (on-prem or self-managed)        | OpenShift Container Platform on OCI      | Container Redeployment (CI/CD, Helm, GitOps)      | Kubernetes to OpenShift on OCI (Redeploy)                 |
 | Red Hat OpenShift (on-prem or self-managed) | OpenShift Container Platform on OCI      | Migration Toolkit for Containers (MTC)            | OpenShift to OpenShift on OCI using MTC                   |
