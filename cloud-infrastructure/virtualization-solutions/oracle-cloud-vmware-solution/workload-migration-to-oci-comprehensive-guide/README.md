@@ -1,14 +1,12 @@
 # Workload Migration to OCI - Scenarios & Guidelines
 
-This guide provides a comprehensive technical framework for migrating workloads to Oracle Cloud Infrastructure (OCI). It addresses migrations from virtualized, bare-metal, public cloud, and platform-based environments, outlining lift-and-shift, replatforming, redeployment, and consolidation strategies.
-
-The guide covers VMware and non-VMware virtualization, cross-cloud replatforming, OpenShift-based platform standardization, and mixed VM–container convergence paths. It also details the tooling and architectural patterns required to execute large-scale enterprise migrations with minimal operational disruption.
+This guide provides a comprehensive technical framework for migrating workloads to Oracle Cloud Infrastructure (OCI). It covers VMware and non-VMware virtualization, cross-cloud replatforming, OpenShift-based platform standardization, and mixed VM–container convergence paths. It also details the tooling and architectural patterns required to execute large-scale enterprise migrations with minimal operational disruption.
 
 ## Migration Scenarios
 
 This guide outlines the principal migration paths for transitioning workloads from on-premises and public cloud environments to Oracle Cloud Infrastructure (OCI), covering virtualized, bare-metal, cloud-native, and containerized platforms. The following scenarios are considered:
 
-**Virtual Machine & Bare-Metal Workloads**
+**Virtual Machine & Physical Workloads**
 
 - VMware vSphere → Oracle Cloud VMware Solution (OCVS): A lift-and-shift migration preserving the full VMware SDDC stack (ESXi, vCenter, vSAN, NSX). This approach minimizes operational disruption and enables Layer-2 extension, IP retention, and live mobility using VMware HCX.
 
@@ -32,31 +30,14 @@ Bare-metal workloads are migrated directly to OCI, either into OCI Compute or vi
 
 **Workload Migration to OCI Decision tree**
 
+This diagram assists architects in choosing a migration strategy based on the Source Platform and the desired Target Environment (OCI Native vs. VMware Solution).
+Decision Logic by Source Platform.
+
 <p align = "center">
 
 ![Decision tree ](./files/images/Workload_to_OCI_Decision_tree.jpg)
 
 </p>
-
-This diagram assists architects in choosing a migration strategy based on the Source Platform and the desired Target Environment (OCI Native vs. VMware Solution).
-Decision Logic by Source Platform
-
-**VMware vSphere:**
-
-- Targeting OCVS: Use VMware HCX for seamless, large-scale "lift and shift" without re-architecting.
-
-- Targeting OCI Native: Use OCM or Rackware to convert VMs into native OCI shapes.
-
-**Hyper-V or KVM:**
-
-Targeting OCI Native: Rackware is the primary tool for automated migration.
-
-Alternative: For specific enterprise requirements, HCX Enterprise (ENT) may be considered.
-
-**Physical x86 Servers:**
-
-Rackware is the recommended solution to bridge the gap between physical hardware and the cloud, regardless of whether the target is OCI Native or OCVS.
-
 
 **Public Cloud to OCI**
 
@@ -71,17 +52,13 @@ Rackware is the recommended solution to bridge the gap between physical hardware
 
 **Public Cloud Instances Migration to OCI**
 
+This diagram outlines the migration path for workloads currently hosted on other major public cloud providers. The goal is to transition these workloads into Target OCI Native Instances.
+
 <p align = "center">
 
 ![Decision tree ](./files/images/Public_Cloud_to_OCI_Decision_tree.jpg)
 
 </p>
-
-This diagram outlines the migration path for workloads currently hosted on other major public cloud providers. The goal is to transition these workloads into Target OCI Native Instances.
-
-For AWS EC2 / VMs: Users have two primary pathways. You can utilize Oracle Cloud Migrations (OCM) for a streamlined, native experience, or leverage Rackware for automated migration handling.
-
-For Other Public Clouds (Azure, GCP, etc.): The recommended tool for moving these instances to OCI is Rackware, which specializes in cross-cloud mobility and automated provisioning.
 
 **OpenShift-Based Platform Migration**
 
@@ -98,29 +75,13 @@ For Other Public Clouds (Azure, GCP, etc.): The recommended tool for moving thes
 | Mixed VM-based + Containerized Workloads    | OpenShift Virtualization on OCI          | Containers: Redeploy or MTC<br>VMs: MTV           | Mixed VM + Container to OpenShift Virtualization          |
 
 **OpenShift-Based Platform Migration**
+This diagram focuses on the transition of containerized and hybrid workloads specifically into a Red Hat OpenShift on OCI environment.
 
 <p align = "center">
 
 ![Decision tree ](./files/images/Containers_to_OCI_Decision_tree.jpg)
 
 </p>
-
-This decision tree focuses on the transition of containerized and hybrid workloads specifically into a Red Hat OpenShift on OCI environment.
-Migration Strategies
-
-**Standard Kubernetes:** Method: Container Redeployment.
-
-Tools: Leverage modern DevOps practices including CI/CD pipelines, Helm charts, and GitOps to deploy fresh instances on OCI.
-
-**Red Hat OpenShift (Source):**
-
-Tool: Migration Toolkit for Containers (MTC). This is the optimal path to migrate existing namespaces, stateful applications, and persistent volumes.
-
-**Mixed Workloads (VM + Containers):**
-
-Containerized Apps: Use Redeploy or MTC to move to OpenShift Containers.
-
-VM-based Apps: Utilize the Migration Toolkit for Virtualization (MTV) to migrate legacy virtual machines into OpenShift Virtualization on OCI, consolidating management under a single pane of glass.
 
 # When to use this asset?
 
